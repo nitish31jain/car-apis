@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -20,7 +22,7 @@ public class CarIntegrationTest {
     TestRestTemplate restTemplate;
 
     @Test
-    public void test_getCarDetails() {
+    public void test_getCarDetails_success() {
         //arrange
 
         // act
@@ -28,7 +30,7 @@ public class CarIntegrationTest {
 
         // assert
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody().getName()).isEqualTo("Tesla");
-        assertThat(responseEntity.getBody().getType()).isEqualTo("Electric");
+        assertThat(responseEntity.getBody().getName()).isEqualTo("tesla");
+        assertThat(responseEntity.getBody().getType()).isEqualTo("electric");
     }
 }

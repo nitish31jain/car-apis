@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -29,13 +31,13 @@ public class CachingTest {
 
     @Test
     public void test_caching() {
-        given(carRepository.findByName(anyString()))
-                .willReturn(new Car("tesla", "electric"));
+        given(carRepository.findAllByName(anyString()))
+                .willReturn(Arrays.asList(new Car("tesla", "electric")));
 
         carService.getCarDetails("tesla");
         carService.getCarDetails("tesla");
 
         verify(carRepository, times(2))
-                .findByName("tesla");
+                .findAllByName("tesla");
     }
 }

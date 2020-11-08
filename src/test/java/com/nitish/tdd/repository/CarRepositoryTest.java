@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -21,10 +23,11 @@ public class CarRepositoryTest {
 
     @Test
     public void test_getCar_returnsCarDetails() {
-        Car savedCar = entityManager.persistAndFlush(new Car("tesla", "electric"));
-        Car car = carRepository.findByName("tesla");
+        // Car savedCar = entityManager.persistAndFlush(new Car("tesla", "electric"));
+        Car savedCar = carRepository.save(new Car("tesla", "electric"));
+        List<Car> cars = carRepository.findAllByName("tesla");
 
-        assertThat(car.getName()).isEqualTo(savedCar.getName());
-        assertThat(car.getType()).isEqualTo(savedCar.getType());
+        assertThat(cars.get(0).getName()).isEqualTo(savedCar.getName());
+        assertThat(cars.get(0).getType()).isEqualTo(savedCar.getType());
     }
 }

@@ -5,7 +5,10 @@ import com.nitish.tdd.exception.CarNotFoundException;
 import com.nitish.tdd.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CarController {
@@ -17,13 +20,8 @@ public class CarController {
     }
 
     @GetMapping("/car/{name}")
-    private Car gerCar(@PathVariable String name) {
-        return carService.getCarDetails(name);
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private void carNotFoundHandler(CarNotFoundException exception) {
-
+    private ResponseEntity<Car> gerCar(@PathVariable String name) {
+        return new ResponseEntity<Car>(
+                carService.getCarDetails(name), HttpStatus.OK);
     }
 }

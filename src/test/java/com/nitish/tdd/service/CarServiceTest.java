@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
@@ -22,17 +25,18 @@ public class CarServiceTest {
 
     @Test
     public void test_getCarDetails() {
-        given(carRepository.findByName("tesla")).willReturn(new Car("tesla", "electric"));
+        given(carRepository.findAllByName(("tesla")))
+                .willReturn(Arrays.asList(new Car("tesla", "electric")));
 
-        Car car = carService.getCarDetails("tesla");
+        List<Car> cars = carService.getCarDetails("tesla");
 
-        assertThat(car.getName()).isEqualTo("tesla");
-        assertThat(car.getType()).isEqualTo("electric");
+        assertThat(cars.get(0).getName()).isEqualTo("tesla");
+        assertThat(cars.get(0).getType()).isEqualTo("electric");
     }
 
     @Test (expected = CarNotFoundException.class)
     public void test_getCarDetails_notFound() {
-        given(carRepository.findByName("tesla")).willReturn(null);
+        given(carRepository.findAllByName("tesla")).willReturn(null);
 
         carService.getCarDetails("tesla");
     }

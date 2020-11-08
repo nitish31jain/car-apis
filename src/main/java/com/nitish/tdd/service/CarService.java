@@ -6,6 +6,8 @@ import com.nitish.tdd.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CarService {
 
@@ -16,11 +18,11 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public Car getCarDetails(String name) {
-        Car car = carRepository.findByName(name);
-        if (car == null) {
+    public List<Car> getCarDetails(String name) {
+        List<Car> cars = carRepository.findAllByName(name);
+        if (cars == null) {
             throw new CarNotFoundException();
         }
-        return car;
+        return cars;
     }
 }
